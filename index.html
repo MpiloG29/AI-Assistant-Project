@@ -10,7 +10,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
@@ -18,279 +18,292 @@
             min-height: 100vh;
             padding: 20px;
         }
-        
+
         .container {
             max-width: 800px;
             margin: 0 auto;
             background: white;
             border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             overflow: hidden;
         }
-        
+
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 30px;
             text-align: center;
         }
-        
+
         .header h1 {
-            font-size: 2.5em;
+            font-size: 2.5rem;
             margin-bottom: 10px;
         }
-        
+
         .header p {
-            font-size: 1.1em;
+            font-size: 1.1rem;
             opacity: 0.9;
         }
-        
-        .content {
-            padding: 30px;
+
+        .chat-container {
+            height: 500px;
+            display: flex;
+            flex-direction: column;
         }
-        
-        .form-group {
-            margin-bottom: 25px;
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
         }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #333;
-            font-size: 1.1em;
+
+        .message {
+            margin-bottom: 15px;
+            padding: 12px 16px;
+            border-radius: 18px;
+            max-width: 70%;
+            animation: fadeIn 0.3s ease-in;
         }
-        
-        select, textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e1e5e9;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-        
-        select:focus, textarea:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-        
-        textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-        
-        .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+        .user-message {
+            background: #007bff;
             color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s;
-            width: 100%;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
         }
-        
-        .btn:hover {
-            transform: translateY(-2px);
+
+        .ai-message {
+            background: white;
+            color: #333;
+            border: 1px solid #e0e0e0;
+            border-bottom-left-radius: 5px;
         }
-        
-        .btn:active {
-            transform: translateY(0);
-        }
-        
-        .loading {
+
+        .typing-indicator {
             display: none;
-            text-align: center;
+            padding: 12px 16px;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 18px;
+            border-bottom-left-radius: 5px;
+            max-width: 70%;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #999;
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        .input-container {
+            display: flex;
             padding: 20px;
-            color: #667eea;
-            font-size: 1.1em;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            gap: 10px;
         }
-        
-        .result {
-            margin-top: 25px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
-            white-space: pre-wrap;
-            min-height: 150px;
+
+        #userInput {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            font-size: 16px;
         }
-        
-        .success {
-            background: #d4edda;
-            border-left-color: #28a745;
+
+        #userInput:focus {
+            border-color: #007bff;
         }
-        
-        .error {
+
+        #sendButton {
+            padding: 12px 24px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        #sendButton:hover {
+            background: #0056b3;
+        }
+
+        #sendButton:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .error-message {
             background: #f8d7da;
-            border-left-color: #dc3545;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
         }
-        
-        .examples {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 10px;
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
-        .examples h4 {
-            margin-bottom: 10px;
-            color: #495057;
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
         }
-        
-        .examples ul {
-            list-style: none;
-            padding-left: 0;
-        }
-        
-        .examples li {
-            padding: 5px 0;
-            color: #6c757d;
+
+        @media (max-width: 600px) {
+            .message {
+                max-width: 85%;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🤖 AI Portfolio Assistant</h1>
-            <p>Generate professional content instantly - Frontend by Your Name</p>
+            <h1>AI Portfolio Assistant</h1>
+            <p>Ask me anything about my skills, projects, or experience</p>
         </div>
         
-        <div class="content">
-            <div class="form-group">
-                <label for="contentType">What would you like to generate?</label>
-                <select id="contentType">
-                    <option value="bio">📝 Professional Bio</option>
-                    <option value="project">💼 Project Summary</option>
-                    <option value="reflection">🎓 Learning Reflection</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="userInput">Enter your information:</label>
-                <textarea id="userInput" placeholder="Describe your experience, skills, projects, or learning journey..."></textarea>
-                
-                <div class="examples">
-                    <h4>💡 Examples:</h4>
-                    <ul>
-                        <li><strong>Bio:</strong> "2 years web development, Python, JavaScript, React, university projects"</li>
-                        <li><strong>Project:</strong> "E-commerce website with payment processing and user accounts"</li>
-                        <li><strong>Reflection:</strong> "Learning Git version control and Agile methodologies"</li>
-                    </ul>
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <div class="message ai-message">
+                    Hello! I'm your AI portfolio assistant. How can I help you today?
                 </div>
             </div>
             
-            <button class="btn" onclick="generateContent()">
-                🚀 Generate Professional Content
-            </button>
-            
-            <div class="loading" id="loading">
-                <div>✨ AI is generating your content... Please wait</div>
+            <div class="typing-indicator" id="typingIndicator">
+                <div class="typing-dots">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
             </div>
             
-            <div class="result" id="result">
-                Your AI-generated content will appear here. Try entering some information above!
+            <div class="input-container">
+                <input type="text" id="userInput" placeholder="Type your message here..." autocomplete="off">
+                <button id="sendButton">Send</button>
             </div>
         </div>
     </div>
 
     <script>
-        // Mock AI responses - works without backend
-        function generateMockContent(contentType, userInput) {
-            const templates = {
-                bio: [
-                    `**PROFESSIONAL BIO**\n\nExperienced professional with expertise in ${userInput}. Demonstrated success in delivering high-quality solutions through strong technical skills and collaborative approach. Committed to continuous learning and innovation in the field.`,
-                    
-                    `**ABOUT ME**\n\nWith a background in ${userInput}, I bring a unique blend of technical proficiency and creative problem-solving. My experience spans multiple projects where I've consistently delivered results that exceed expectations.`,
-                    
-                    `**PROFILE SUMMARY**\n\nSkilled professional specializing in ${userInput}. Known for innovative approaches and dedication to excellence. Strong track record of successful project delivery and team collaboration.`
-                ],
-                project: [
-                    `**PROJECT OVERVIEW**\n\nDeveloped a comprehensive solution involving ${userInput}. The project successfully addressed key challenges through strategic planning and technical execution, resulting in measurable outcomes and positive impact.`,
-                    
-                    `**PROJECT SUMMARY**\n\nThis initiative focused on ${userInput}, showcasing strong technical capabilities and effective project management. Delivered on all objectives while maintaining high quality standards throughout the development process.`,
-                    
-                    `**PROJECT HIGHLIGHTS**\n\nSuccessfully executed a project centered around ${userInput}. Demonstrated expertise in technical implementation while ensuring alignment with business goals and user requirements.`
-                ],
-                reflection: [
-                    `**LEARNING JOURNEY**\n\nThrough my experience with ${userInput}, I've gained valuable insights that have significantly enhanced my professional capabilities. This learning process has been instrumental in developing both technical skills and strategic thinking.`,
-                    
-                    `**SKILLS DEVELOPMENT**\n\nWorking with ${userInput} provided substantial growth opportunities. I've acquired practical expertise that has directly contributed to my professional development and problem-solving abilities.`,
-                    
-                    `**PERSONAL GROWTH**\n\nMy engagement with ${userInput} has been transformative, fostering both technical mastery and personal development. The experience has prepared me for increasingly complex challenges in my field.`
-                ]
-            };
+        class ChatInterface {
+            constructor() {
+                this.chatMessages = document.getElementById('chatMessages');
+                this.userInput = document.getElementById('userInput');
+                this.sendButton = document.getElementById('sendButton');
+                this.typingIndicator = document.getElementById('typingIndicator');
+                
+                this.initializeEventListeners();
+            }
             
-            const options = templates[contentType] || templates.bio;
-            const randomIndex = Math.floor(Math.random() * options.length);
-            return options[randomIndex];
+            initializeEventListeners() {
+                this.sendButton.addEventListener('click', () => this.sendMessage());
+                this.userInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.sendMessage();
+                    }
+                });
+            }
+            
+            async sendMessage() {
+                const message = this.userInput.value.trim();
+                if (!message) return;
+                
+                // Add user message to chat
+                this.addMessage(message, 'user');
+                this.userInput.value = '';
+                this.setLoadingState(true);
+                
+                try {
+                    // Show typing indicator
+                    this.showTypingIndicator();
+                    
+                    // TODO: Replace with your actual backend API call
+                    const response = await this.callBackendAPI(message);
+                    
+                    // Hide typing indicator
+                    this.hideTypingIndicator();
+                    
+                    // Add AI response to chat
+                    this.addMessage(response, 'ai');
+                    
+                } catch (error) {
+                    this.hideTypingIndicator();
+                    this.addMessage('Sorry, I encountered an error. Please try again.', 'ai', true);
+                    console.error('Error:', error);
+                } finally {
+                    this.setLoadingState(false);
+                }
+            }
+            
+            async callBackendAPI(message) {
+                // TODO: Replace this with your actual backend endpoint
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                
+                const data = await response.json();
+                return data.reply;
+            }
+            
+            addMessage(text, sender, isError = false) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}-message ${isError ? 'error-message' : ''}`;
+                messageDiv.textContent = text;
+                
+                this.chatMessages.appendChild(messageDiv);
+                this.scrollToBottom();
+            }
+            
+            showTypingIndicator() {
+                this.typingIndicator.style.display = 'block';
+                this.scrollToBottom();
+            }
+            
+            hideTypingIndicator() {
+                this.typingIndicator.style.display = 'none';
+            }
+            
+            setLoadingState(isLoading) {
+                this.sendButton.disabled = isLoading;
+                this.userInput.disabled = isLoading;
+                this.sendButton.textContent = isLoading ? 'Sending...' : 'Send';
+            }
+            
+            scrollToBottom() {
+                this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+            }
         }
-
-        async function generateContent() {
-            const contentType = document.getElementById('contentType').value;
-            const userInput = document.getElementById('userInput').value;
-            const resultDiv = document.getElementById('result');
-            const loadingDiv = document.getElementById('loading');
-            
-            if (!userInput.trim()) {
-                alert('Please enter some information to generate content.');
-                return;
-            }
-            
-            // Show loading state
-            loadingDiv.style.display = 'block';
-            resultDiv.innerHTML = 'Processing your request...';
-            resultDiv.className = 'result';
-            
-            try {
-                // Simulate API call delay
-                await new Promise(resolve => setTimeout(resolve, 1500));
-                
-                // Generate mock content
-                const generatedText = generateMockContent(contentType, userInput);
-                
-                resultDiv.innerHTML = generatedText;
-                resultDiv.className = 'result success';
-                
-            } catch (error) {
-                resultDiv.innerHTML = 'Error: ' + error.message;
-                resultDiv.className = 'result error';
-            } finally {
-                loadingDiv.style.display = 'none';
-            }
-        }
-
-        // Add interactivity to examples
-        document.addEventListener('DOMContentLoaded', function() {
-            const contentTypeSelect = document.getElementById('contentType');
-            const examplesList = document.querySelector('.examples ul');
-            
-            function updateExamples() {
-                const type = contentTypeSelect.value;
-                const exampleTexts = {
-                    bio: '<li><strong>Example:</strong> "2 years web development, Python, JavaScript, React, university projects"</li>',
-                    project: '<li><strong>Example:</strong> "E-commerce website with payment processing and user accounts"</li>',
-                    reflection: '<li><strong>Example:</strong> "Learning Git version control and Agile methodologies"</li>'
-                };
-                
-                examplesList.innerHTML = exampleTexts[type] || exampleTexts.bio;
-            }
-            
-            // Update examples when selection changes
-            contentTypeSelect.addEventListener('change', updateExamples);
-            
-            // Initialize examples
-            updateExamples();
-        });
-
-        // Add keyboard shortcut (Enter key in textarea)
-        document.getElementById('userInput').addEventListener('keydown', function(event) {
-            if (event.key === 'Enter' && event.ctrlKey) {
-                generateContent();
-            }
+        
+        // Initialize chat interface when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new ChatInterface();
         });
     </script>
 </body>
